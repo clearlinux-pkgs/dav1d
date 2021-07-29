@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x7180713BE58D1ADC
 #
 Name     : dav1d
-Version  : 0.9.0
-Release  : 4
-URL      : https://downloads.videolan.org/pub/videolan/dav1d/0.9.0/dav1d-0.9.0.tar.xz
-Source0  : https://downloads.videolan.org/pub/videolan/dav1d/0.9.0/dav1d-0.9.0.tar.xz
-Source1  : https://downloads.videolan.org/pub/videolan/dav1d/0.9.0/dav1d-0.9.0.tar.xz.asc
+Version  : 0.9.1
+Release  : 5
+URL      : https://downloads.videolan.org/pub/videolan/dav1d/0.9.1/dav1d-0.9.1.tar.xz
+Source0  : https://downloads.videolan.org/pub/videolan/dav1d/0.9.1/dav1d-0.9.1.tar.xz
+Source1  : https://downloads.videolan.org/pub/videolan/dav1d/0.9.1/dav1d-0.9.1.tar.xz.asc
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-2-Clause
@@ -65,13 +65,13 @@ license components for the dav1d package.
 
 
 %prep
-%setup -q -n dav1d-0.9.0
-cd %{_builddir}/dav1d-0.9.0
+%setup -q -n dav1d-0.9.1
+cd %{_builddir}/dav1d-0.9.1
 pushd ..
-cp -a dav1d-0.9.0 buildavx2
+cp -a dav1d-0.9.1 buildavx2
 popd
 pushd ..
-cp -a dav1d-0.9.0 buildavx512
+cp -a dav1d-0.9.1 buildavx512
 popd
 
 %build
@@ -79,15 +79,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1621263799
+export SOURCE_DATE_EPOCH=1627517185
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto "
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --libdir=lib64 --prefix=/usr --buildtype=plain   builddir
 ninja -v -C builddir
 CFLAGS="$CFLAGS -m64 -march=haswell" CXXFLAGS="$CXXFLAGS -m64 -march=haswell " LDFLAGS="$LDFLAGS -m64 -march=haswell" meson --libdir=lib64/haswell --prefix=/usr --buildtype=plain   builddiravx2
@@ -104,15 +104,13 @@ meson test -C builddir
 
 %install
 mkdir -p %{buildroot}/usr/share/package-licenses/dav1d
-cp %{_builddir}/dav1d-0.9.0/COPYING %{buildroot}/usr/share/package-licenses/dav1d/4f6bb845e36328fa89de127c56773dbfd9c90042
+cp %{_builddir}/dav1d-0.9.1/COPYING %{buildroot}/usr/share/package-licenses/dav1d/4f6bb845e36328fa89de127c56773dbfd9c90042
 DESTDIR=%{buildroot} ninja -C builddiravx512 install
 DESTDIR=%{buildroot} ninja -C builddiravx2 install
 DESTDIR=%{buildroot} ninja -C builddir install
 
 %files
 %defattr(-,root,root,-)
-/usr/lib64/haswell/avx512_1/pkgconfig/dav1d.pc
-/usr/lib64/haswell/pkgconfig/dav1d.pc
 
 %files bin
 %defattr(-,root,root,-)
@@ -127,18 +125,20 @@ DESTDIR=%{buildroot} ninja -C builddir install
 /usr/include/dav1d/picture.h
 /usr/include/dav1d/version.h
 /usr/lib64/haswell/avx512_1/libdav1d.so
+/usr/lib64/haswell/avx512_1/pkgconfig/dav1d.pc
 /usr/lib64/haswell/libdav1d.so
+/usr/lib64/haswell/pkgconfig/dav1d.pc
 /usr/lib64/libdav1d.so
 /usr/lib64/pkgconfig/dav1d.pc
 
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/haswell/avx512_1/libdav1d.so.5
-/usr/lib64/haswell/avx512_1/libdav1d.so.5.1.0
+/usr/lib64/haswell/avx512_1/libdav1d.so.5.1.1
 /usr/lib64/haswell/libdav1d.so.5
-/usr/lib64/haswell/libdav1d.so.5.1.0
+/usr/lib64/haswell/libdav1d.so.5.1.1
 /usr/lib64/libdav1d.so.5
-/usr/lib64/libdav1d.so.5.1.0
+/usr/lib64/libdav1d.so.5.1.1
 
 %files license
 %defattr(0644,root,root,0755)
