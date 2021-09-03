@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x7180713BE58D1ADC
 #
 Name     : dav1d
-Version  : 0.9.1
-Release  : 5
-URL      : https://downloads.videolan.org/pub/videolan/dav1d/0.9.1/dav1d-0.9.1.tar.xz
-Source0  : https://downloads.videolan.org/pub/videolan/dav1d/0.9.1/dav1d-0.9.1.tar.xz
-Source1  : https://downloads.videolan.org/pub/videolan/dav1d/0.9.1/dav1d-0.9.1.tar.xz.asc
+Version  : 0.9.2
+Release  : 6
+URL      : https://downloads.videolan.org/pub/videolan/dav1d/0.9.2/dav1d-0.9.2.tar.xz
+Source0  : https://downloads.videolan.org/pub/videolan/dav1d/0.9.2/dav1d-0.9.2.tar.xz
+Source1  : https://downloads.videolan.org/pub/videolan/dav1d/0.9.2/dav1d-0.9.2.tar.xz.asc
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-2-Clause
@@ -65,13 +65,13 @@ license components for the dav1d package.
 
 
 %prep
-%setup -q -n dav1d-0.9.1
-cd %{_builddir}/dav1d-0.9.1
+%setup -q -n dav1d-0.9.2
+cd %{_builddir}/dav1d-0.9.2
 pushd ..
-cp -a dav1d-0.9.1 buildavx2
+cp -a dav1d-0.9.2 buildavx2
 popd
 pushd ..
-cp -a dav1d-0.9.1 buildavx512
+cp -a dav1d-0.9.2 buildavx512
 popd
 
 %build
@@ -79,7 +79,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1627517185
+export SOURCE_DATE_EPOCH=1630690453
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -104,7 +104,7 @@ meson test -C builddir
 
 %install
 mkdir -p %{buildroot}/usr/share/package-licenses/dav1d
-cp %{_builddir}/dav1d-0.9.1/COPYING %{buildroot}/usr/share/package-licenses/dav1d/4f6bb845e36328fa89de127c56773dbfd9c90042
+cp %{_builddir}/dav1d-0.9.2/COPYING %{buildroot}/usr/share/package-licenses/dav1d/4f6bb845e36328fa89de127c56773dbfd9c90042
 DESTDIR=%{buildroot} ninja -C builddiravx512 install
 DESTDIR=%{buildroot} ninja -C builddiravx2 install
 DESTDIR=%{buildroot} ninja -C builddir install
