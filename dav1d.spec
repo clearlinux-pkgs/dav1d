@@ -6,7 +6,7 @@
 #
 Name     : dav1d
 Version  : 0.9.2
-Release  : 6
+Release  : 7
 URL      : https://downloads.videolan.org/pub/videolan/dav1d/0.9.2/dav1d-0.9.2.tar.xz
 Source0  : https://downloads.videolan.org/pub/videolan/dav1d/0.9.2/dav1d-0.9.2.tar.xz
 Source1  : https://downloads.videolan.org/pub/videolan/dav1d/0.9.2/dav1d-0.9.2.tar.xz.asc
@@ -14,6 +14,7 @@ Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-2-Clause
 Requires: dav1d-bin = %{version}-%{release}
+Requires: dav1d-filemap = %{version}-%{release}
 Requires: dav1d-lib = %{version}-%{release}
 Requires: dav1d-license = %{version}-%{release}
 BuildRequires : buildreq-meson
@@ -30,6 +31,7 @@ BuildRequires : nasm-bin
 Summary: bin components for the dav1d package.
 Group: Binaries
 Requires: dav1d-license = %{version}-%{release}
+Requires: dav1d-filemap = %{version}-%{release}
 
 %description bin
 bin components for the dav1d package.
@@ -47,10 +49,19 @@ Requires: dav1d = %{version}-%{release}
 dev components for the dav1d package.
 
 
+%package filemap
+Summary: filemap components for the dav1d package.
+Group: Default
+
+%description filemap
+filemap components for the dav1d package.
+
+
 %package lib
 Summary: lib components for the dav1d package.
 Group: Libraries
 Requires: dav1d-license = %{version}-%{release}
+Requires: dav1d-filemap = %{version}-%{release}
 
 %description lib
 lib components for the dav1d package.
@@ -79,7 +90,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1630690453
+export SOURCE_DATE_EPOCH=1633739718
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -90,9 +101,9 @@ export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto "
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --libdir=lib64 --prefix=/usr --buildtype=plain   builddir
 ninja -v -C builddir
-CFLAGS="$CFLAGS -m64 -march=haswell" CXXFLAGS="$CXXFLAGS -m64 -march=haswell " LDFLAGS="$LDFLAGS -m64 -march=haswell" meson --libdir=lib64/haswell --prefix=/usr --buildtype=plain   builddiravx2
+CFLAGS="$CFLAGS -m64 -march=x86-64-v3" CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 " LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3" meson --libdir=lib64 --prefix=/usr --buildtype=plain   builddiravx2
 ninja -v -C builddiravx2
-CFLAGS="$CFLAGS -m64 -march=skylake-avx512" CXXFLAGS="$CXXFLAGS -m64 -march=skylake-avx512 " LDFLAGS="$LDFLAGS -m64 -march=skylake-avx512" meson --libdir=lib64/haswell/avx512_1 --prefix=/usr --buildtype=plain   builddiravx512
+CFLAGS="$CFLAGS -m64 -march=x86-64-v4" CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v4 " LDFLAGS="$LDFLAGS -m64 -march=x86-64-v4" meson --libdir=lib64 --prefix=/usr --buildtype=plain   builddiravx512
 ninja -v -C builddiravx512
 
 %check
@@ -100,13 +111,15 @@ export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-meson test -C builddir
+meson test -C builddir --print-errorlogs
 
 %install
 mkdir -p %{buildroot}/usr/share/package-licenses/dav1d
 cp %{_builddir}/dav1d-0.9.2/COPYING %{buildroot}/usr/share/package-licenses/dav1d/4f6bb845e36328fa89de127c56773dbfd9c90042
-DESTDIR=%{buildroot} ninja -C builddiravx512 install
-DESTDIR=%{buildroot} ninja -C builddiravx2 install
+DESTDIR=%{buildroot}-v3 ninja -C builddiravx2 install
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
+DESTDIR=%{buildroot}-v4 ninja -C builddiravx512 install
+/usr/bin/elf-move.py avx512 %{buildroot}-v4 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 DESTDIR=%{buildroot} ninja -C builddir install
 
 %files
@@ -115,6 +128,7 @@ DESTDIR=%{buildroot} ninja -C builddir install
 %files bin
 %defattr(-,root,root,-)
 /usr/bin/dav1d
+/usr/share/clear/optimized-elf/bin*
 
 %files dev
 %defattr(-,root,root,-)
@@ -124,21 +138,18 @@ DESTDIR=%{buildroot} ninja -C builddir install
 /usr/include/dav1d/headers.h
 /usr/include/dav1d/picture.h
 /usr/include/dav1d/version.h
-/usr/lib64/haswell/avx512_1/libdav1d.so
-/usr/lib64/haswell/avx512_1/pkgconfig/dav1d.pc
-/usr/lib64/haswell/libdav1d.so
-/usr/lib64/haswell/pkgconfig/dav1d.pc
 /usr/lib64/libdav1d.so
 /usr/lib64/pkgconfig/dav1d.pc
 
+%files filemap
+%defattr(-,root,root,-)
+/usr/share/clear/filemap/filemap-dav1d
+
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/haswell/avx512_1/libdav1d.so.5
-/usr/lib64/haswell/avx512_1/libdav1d.so.5.1.1
-/usr/lib64/haswell/libdav1d.so.5
-/usr/lib64/haswell/libdav1d.so.5.1.1
 /usr/lib64/libdav1d.so.5
 /usr/lib64/libdav1d.so.5.1.1
+/usr/share/clear/optimized-elf/lib*
 
 %files license
 %defattr(0644,root,root,0755)
