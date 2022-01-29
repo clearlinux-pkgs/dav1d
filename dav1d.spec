@@ -6,7 +6,7 @@
 #
 Name     : dav1d
 Version  : 0.9.2
-Release  : 9
+Release  : 10
 URL      : https://downloads.videolan.org/pub/videolan/dav1d/0.9.2/dav1d-0.9.2.tar.xz
 Source0  : https://downloads.videolan.org/pub/videolan/dav1d/0.9.2/dav1d-0.9.2.tar.xz
 Source1  : https://downloads.videolan.org/pub/videolan/dav1d/0.9.2/dav1d-0.9.2.tar.xz.asc
