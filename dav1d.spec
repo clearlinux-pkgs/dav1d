@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x7180713BE58D1ADC
 #
 Name     : dav1d
-Version  : 0.9.2
-Release  : 11
-URL      : https://downloads.videolan.org/pub/videolan/dav1d/0.9.2/dav1d-0.9.2.tar.xz
-Source0  : https://downloads.videolan.org/pub/videolan/dav1d/0.9.2/dav1d-0.9.2.tar.xz
-Source1  : https://downloads.videolan.org/pub/videolan/dav1d/0.9.2/dav1d-0.9.2.tar.xz.asc
+Version  : 1.0.0
+Release  : 12
+URL      : https://downloads.videolan.org/pub/videolan/dav1d/1.0.0/dav1d-1.0.0.tar.xz
+Source0  : https://downloads.videolan.org/pub/videolan/dav1d/1.0.0/dav1d-1.0.0.tar.xz
+Source1  : https://downloads.videolan.org/pub/videolan/dav1d/1.0.0/dav1d-1.0.0.tar.xz.asc
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-2-Clause
@@ -18,14 +18,12 @@ Requires: dav1d-filemap = %{version}-%{release}
 Requires: dav1d-lib = %{version}-%{release}
 Requires: dav1d-license = %{version}-%{release}
 BuildRequires : buildreq-meson
-BuildRequires : doxygen
-BuildRequires : graphviz
 BuildRequires : nasm-bin
 
 %description
 ![dav1d logo](doc/dav1d_logo.png)
 # dav1d
-**dav1d** is a new **AV1** cross-platform **d**ecoder, open-source, and focused on speed and correctness.
+**dav1d** is an **AV1** cross-platform **d**ecoder, open-source, and focused on speed and correctness.
 
 %package bin
 Summary: bin components for the dav1d package.
@@ -76,13 +74,13 @@ license components for the dav1d package.
 
 
 %prep
-%setup -q -n dav1d-0.9.2
-cd %{_builddir}/dav1d-0.9.2
+%setup -q -n dav1d-1.0.0
+cd %{_builddir}/dav1d-1.0.0
 pushd ..
-cp -a dav1d-0.9.2 buildavx2
+cp -a dav1d-1.0.0 buildavx2
 popd
 pushd ..
-cp -a dav1d-0.9.2 buildavx512
+cp -a dav1d-1.0.0 buildavx512
 popd
 
 %build
@@ -90,7 +88,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1634677879
+export SOURCE_DATE_EPOCH=1647641001
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -115,7 +113,7 @@ meson test -C builddir --print-errorlogs
 
 %install
 mkdir -p %{buildroot}/usr/share/package-licenses/dav1d
-cp %{_builddir}/dav1d-0.9.2/COPYING %{buildroot}/usr/share/package-licenses/dav1d/4f6bb845e36328fa89de127c56773dbfd9c90042
+cp %{_builddir}/dav1d-1.0.0/COPYING %{buildroot}/usr/share/package-licenses/dav1d/4f6bb845e36328fa89de127c56773dbfd9c90042
 DESTDIR=%{buildroot}-v3 ninja -C builddiravx2 install
 DESTDIR=%{buildroot}-v4 ninja -C builddiravx512 install
 DESTDIR=%{buildroot} ninja -C builddir install
@@ -147,8 +145,8 @@ DESTDIR=%{buildroot} ninja -C builddir install
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/libdav1d.so.5
-/usr/lib64/libdav1d.so.5.1.1
+/usr/lib64/libdav1d.so.6
+/usr/lib64/libdav1d.so.6.6.0
 /usr/share/clear/optimized-elf/lib*
 
 %files license
