@@ -6,7 +6,7 @@
 #
 Name     : dav1d
 Version  : 1.0.0
-Release  : 12
+Release  : 13
 URL      : https://downloads.videolan.org/pub/videolan/dav1d/1.0.0/dav1d-1.0.0.tar.xz
 Source0  : https://downloads.videolan.org/pub/videolan/dav1d/1.0.0/dav1d-1.0.0.tar.xz
 Source1  : https://downloads.videolan.org/pub/videolan/dav1d/1.0.0/dav1d-1.0.0.tar.xz.asc
@@ -88,7 +88,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1647641001
+export SOURCE_DATE_EPOCH=1656018738
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -117,8 +117,8 @@ cp %{_builddir}/dav1d-1.0.0/COPYING %{buildroot}/usr/share/package-licenses/dav1
 DESTDIR=%{buildroot}-v3 ninja -C builddiravx2 install
 DESTDIR=%{buildroot}-v4 ninja -C builddiravx512 install
 DESTDIR=%{buildroot} ninja -C builddir install
-/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
-/usr/bin/elf-move.py avx512 %{buildroot}-v4 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
+/usr/bin/elf-move.py avx512 %{buildroot}-v4 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
@@ -145,9 +145,14 @@ DESTDIR=%{buildroot} ninja -C builddir install
 
 %files lib
 %defattr(-,root,root,-)
+/usr/lib64/glibc-hwcaps/x86-64-v3/libdav1d.so
+/usr/lib64/glibc-hwcaps/x86-64-v3/libdav1d.so.6
+/usr/lib64/glibc-hwcaps/x86-64-v3/libdav1d.so.6.6.0
+/usr/lib64/glibc-hwcaps/x86-64-v4/libdav1d.so
+/usr/lib64/glibc-hwcaps/x86-64-v4/libdav1d.so.6
+/usr/lib64/glibc-hwcaps/x86-64-v4/libdav1d.so.6.6.0
 /usr/lib64/libdav1d.so.6
 /usr/lib64/libdav1d.so.6.6.0
-/usr/share/clear/optimized-elf/lib*
 
 %files license
 %defattr(0644,root,root,0755)
