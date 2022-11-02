@@ -6,7 +6,7 @@
 #
 Name     : dav1d
 Version  : 1.0.0
-Release  : 19
+Release  : 20
 URL      : https://downloads.videolan.org/pub/videolan/dav1d/1.0.0/dav1d-1.0.0.tar.xz
 Source0  : https://downloads.videolan.org/pub/videolan/dav1d/1.0.0/dav1d-1.0.0.tar.xz
 Source1  : https://downloads.videolan.org/pub/videolan/dav1d/1.0.0/dav1d-1.0.0.tar.xz.asc
@@ -88,7 +88,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1665088782
+export SOURCE_DATE_EPOCH=1667420919
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -113,7 +113,7 @@ meson test -C builddir --print-errorlogs
 
 %install
 mkdir -p %{buildroot}/usr/share/package-licenses/dav1d
-cp %{_builddir}/dav1d-%{version}/COPYING %{buildroot}/usr/share/package-licenses/dav1d/4f6bb845e36328fa89de127c56773dbfd9c90042
+cp %{_builddir}/dav1d-%{version}/COPYING %{buildroot}/usr/share/package-licenses/dav1d/4f6bb845e36328fa89de127c56773dbfd9c90042 || :
 DESTDIR=%{buildroot}-v3 ninja -C builddiravx2 install
 DESTDIR=%{buildroot}-v4 ninja -C builddiravx512 install
 DESTDIR=%{buildroot} ninja -C builddir install
