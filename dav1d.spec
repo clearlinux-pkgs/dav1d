@@ -7,7 +7,7 @@
 #
 Name     : dav1d
 Version  : 1.2.0
-Release  : 24
+Release  : 25
 URL      : https://downloads.videolan.org/pub/videolan/dav1d/1.2.0/dav1d-1.2.0.tar.xz
 Source0  : https://downloads.videolan.org/pub/videolan/dav1d/1.2.0/dav1d-1.2.0.tar.xz
 Source1  : https://downloads.videolan.org/pub/videolan/dav1d/1.2.0/dav1d-1.2.0.tar.xz.asc
@@ -81,7 +81,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1683134090
+export SOURCE_DATE_EPOCH=1685494415
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -124,8 +124,6 @@ DESTDIR=%{buildroot} ninja -C builddir install
 
 %files dev
 %defattr(-,root,root,-)
-/V3/usr/lib64/libdav1d.so
-/V4/usr/lib64/libdav1d.so
 /usr/include/dav1d/common.h
 /usr/include/dav1d/data.h
 /usr/include/dav1d/dav1d.h
@@ -137,9 +135,7 @@ DESTDIR=%{buildroot} ninja -C builddir install
 
 %files lib
 %defattr(-,root,root,-)
-/V3/usr/lib64/libdav1d.so.6
 /V3/usr/lib64/libdav1d.so.6.9.0
-/V4/usr/lib64/libdav1d.so.6
 /V4/usr/lib64/libdav1d.so.6.9.0
 /usr/lib64/libdav1d.so.6
 /usr/lib64/libdav1d.so.6.9.0
