@@ -6,11 +6,11 @@
 # Source0 file verified with key 0x7180713BE58D1ADC
 #
 Name     : dav1d
-Version  : 1.2.0
-Release  : 25
-URL      : https://downloads.videolan.org/pub/videolan/dav1d/1.2.0/dav1d-1.2.0.tar.xz
-Source0  : https://downloads.videolan.org/pub/videolan/dav1d/1.2.0/dav1d-1.2.0.tar.xz
-Source1  : https://downloads.videolan.org/pub/videolan/dav1d/1.2.0/dav1d-1.2.0.tar.xz.asc
+Version  : 1.2.1
+Release  : 26
+URL      : https://downloads.videolan.org/pub/videolan/dav1d/1.2.1/dav1d-1.2.1.tar.xz
+Source0  : https://downloads.videolan.org/pub/videolan/dav1d/1.2.1/dav1d-1.2.1.tar.xz
+Source1  : https://downloads.videolan.org/pub/videolan/dav1d/1.2.1/dav1d-1.2.1.tar.xz.asc
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-2-Clause
@@ -67,13 +67,13 @@ license components for the dav1d package.
 
 
 %prep
-%setup -q -n dav1d-1.2.0
-cd %{_builddir}/dav1d-1.2.0
+%setup -q -n dav1d-1.2.1
+cd %{_builddir}/dav1d-1.2.1
 pushd ..
-cp -a dav1d-1.2.0 buildavx2
+cp -a dav1d-1.2.1 buildavx2
 popd
 pushd ..
-cp -a dav1d-1.2.0 buildavx512
+cp -a dav1d-1.2.1 buildavx512
 popd
 
 %build
@@ -81,7 +81,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1685494415
+export SOURCE_DATE_EPOCH=1685651095
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
