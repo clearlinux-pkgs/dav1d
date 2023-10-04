@@ -7,7 +7,7 @@
 #
 Name     : dav1d
 Version  : 1.3.0
-Release  : 28
+Release  : 29
 URL      : https://downloads.videolan.org/pub/videolan/dav1d/1.3.0/dav1d-1.3.0.tar.xz
 Source0  : https://downloads.videolan.org/pub/videolan/dav1d/1.3.0/dav1d-1.3.0.tar.xz
 Source1  : https://downloads.videolan.org/pub/videolan/dav1d/1.3.0/dav1d-1.3.0.tar.xz.asc
